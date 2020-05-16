@@ -6,9 +6,20 @@ import json
 import os
 from hurry.filesize import size
 
+from pandas import json_normalize
+
 class Mongo_Wrapper:
 
     db = ""
+
+    # Need to maintain a common map for this
+    # This is also present in chart_wrapper
+    d_type_map = {
+        "int64": "Integer",
+        "object": "Categorical",
+        "float64": "Float",
+        "bool": "Boolean"
+    }
         
     def save(self, cName, data): 
         cObj = self.db[cName]
@@ -16,26 +27,65 @@ class Mongo_Wrapper:
         #@TODO: If there are more records then insert 1000 records at a time
         cObj.insert_many(data)  
     
-    def save_one(self, cName, data): 
+    def save_one(self, cName, qObj, sObj): 
+        
         cObj = self.db[cName]
         
-        cObj.insert_one(data)
+        newvalues = { "$set": sObj }
+
+        # Update the new settings
+        cObj.update_one(qObj, newvalues)
+
+        # Once update get the new settings from db
+        config_obj = self.get_one(cName, qObj)
+
+        return config_obj
+        
+
+    def get_one(self, cName, qObj):
+        
+        data = self.db[cName].find(qObj)
+
+        result = []
+        
+        doc_dict = {}
+
+        for d in data:
+            doc_dict = {}
+            for k in d:
+                # Removing the object type keys to eliminate the issue with JSON encoding
+                if k not in ["_id"]:
+                     doc_dict[k] = d[k]
+
+            result.append(doc_dict)
+        
+        return result
     
     def get(self, cName):
         
-        data = list(self.db[cName].find({}))
+        # This(10000) is only for initial testing
+        # @TODO: Need to remove this after integration of charts
+        data = list(self.db[cName].find({})) #.limit(5000)) #.limit(1000))
+
+        #print(len(data))
         result = []
         
         for d in data:
             result.append(d)
         
-        return result
+        df = json_normalize(result)
+
+        # Since we dont need key column for our analysis 
+        # We drop it
+        df.drop(columns = ['_id'], inplace = True)
+
+        return df
     
     def get_db_collections(self):
         return self.db.collection_names(include_system_collections=False)
 
 
-    def file_upload(self, uploaded_file, c_name):
+    def file_upload(self, uploaded_file, fname, fext):
 
         #collection_name = 'collection_name'  
         # Replace mongo db collection name
@@ -43,16 +93,16 @@ class Mongo_Wrapper:
         # Create collection beforehand
         #self.db.createCollection("sample_collection")
 
-        db_sc = self.db[c_name]
+        db_sc = self.db[fname]
 
-        cdir = os.path.dirname(__file__)
-        file_res = os.path.join(cdir, uploaded_file)
+        #cdir = os.path.dirname(__file__)
+        #file_res = os.path.join(cdir, uploaded_file)
 
-        filename, file_extension = os.path.splitext(uploaded_file)
-        if(file_extension == ".csv"):
-            data = pd.read_csv(file_res) 
+        #filename, file_extension = os.path.splitext(uploaded_file)
+        if(fext == "csv"):
+            data = pd.read_csv(uploaded_file) 
         else:
-            data = pd.read_excel(file_res)
+            data = pd.read_excel(uploaded_file)
 
         data_json = json.loads(data.to_json(orient='records'))
         db_sc.remove()
@@ -69,19 +119,61 @@ class Mongo_Wrapper:
         }
 
         colstats = self.db.command("collstats", c_name)
-        collection_obj['columns'] = list(self.db[c_name].find_one().keys())
-        # Since we dont need to count _id column
-        collection_obj['col_count'] = len(collection_obj['columns']) - 1
+        single_row = self.db[c_name].find_one()
+        col_list = list(single_row.keys())
+
+        # Remove _id columnn from column list
+        col_list = col_list[1:]
+
+        col_some_df = self.get_m_df(c_name)
+        col_type_map = self.get_df_meta(col_some_df)
+
+        collection_obj['col_type_map'] = col_type_map
+
+        collection_obj['columns'] = col_list
+
+        #print(collection_obj['columns'])
+
+        collection_obj['col_count'] = len(collection_obj['columns'])
         collection_obj['size'] = size(colstats['size'])
         collection_obj['row_count'] = colstats['count']
 
         return collection_obj
+
+    def get_df_meta(self, df):
+        
+        col_type_map = {}
+    
+        # Since we dont need key column for our analysis 
+        # We drop it
+        df.drop(columns = ['_id'], inplace = True)
+
+        for i in range(len(df.columns)):
+            field_key = df.columns[i]
+            field_type = self.d_type_map[str(df[df.columns[i]].dtype)]
+            col_type_map[field_key] = field_type
+
+        return col_type_map
+
+
+    def get_m_df(self, cName):
+
+        # Need to properly check if this is accurate
+        data = list(self.db[cName].find({}).limit(100))
+        
+        result = []
+        
+        for d in data:
+            result.append(d)
+
+        df = json_normalize(result)
+
+        return df
+
           
     def __init__(self, dbName):
+        # Local
         #connection = MongoClient('localhost',27017)
-        connection = pymongo.MongoClient("mongodb://adadmin:adadmin@adcluster-shard-00-00-zmesm.mongodb.net:27017,adcluster-shard-00-01-zmesm.mongodb.net:27017,adcluster-shard-00-02-zmesm.mongodb.net:27017/test?ssl=true&replicaSet=adcluster-shard-0&authSource=admin&retryWrites=true&w=majority")
-
-
-        #connection = pymongo.MongoClient("mongodb+srv://adadmin:adadmin@adcluster-zmesm.mongodb.net/test?retryWrites=true&w=majority")
-
+        # Mongo Atlas cloud
+        connection = pymongo.MongoClient("mongodb://adadmin:adadmin@ad2020-shard-00-00-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-01-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-02-zmesm.gcp.mongodb.net:27017/test?ssl=true&replicaSet=ad2020-shard-0&authSource=admin&retryWrites=true&w=majority")
         self.db = connection[dbName]

@@ -1,0 +1,277 @@
+
+<!-- cards -->
+<section>
+    <div class="container-fluid" id="analytics-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-4">
+                <h4 class="text-muted text-center text-uppercase mb-0 d-block d-md-none">Analytics</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto mt-5">
+                <h3 class="text-muted text-center text-uppercase mb-3 d-none d-md-block">Analytics</h3>
+                
+
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <label class="ml-1">Dataset:</label>
+                        <select class="form-control" id="dsList" ></select>
+                    </div>
+
+                    <div class="col-md-6 mt-5">
+                        <label class="ml-1">Target:</label>
+                        <select class="form-control" id="dsLabel" ></select>
+                    </div>
+
+                    <!--<div class="col-md-6 mt-5">
+                        <label class="ml-1">Plot type:</label>
+                        <select multiple class="form-control" id ="chart_select">
+                            <option value="pie">Pie</option>
+                            <option value="box">Box</option>
+                            <option value="histogram">Histogram</option>
+                            <option value="heatmap">Heatmap</option>
+                            <option value="field">Explore Fields</option>
+                            
+                            <option value="bar">Bar</option>    
+                            <option value="correlation">Correlation</option>
+                            <option value="line">Line</option>
+                            <option value="confusion_matrix">Confusion Matrix</option>
+                            <option value="area">Area</option>
+                            <option value="scatter">Scatter</option>
+                            <option value="stacked">Stacked</option>
+                            <option value="horizontal_bar">Horizontal Bar</option>
+                            <option value="bubble">Bubble</option>
+                            <option value="polar">Polar</option>
+                            <option value="normal">Normal</option>
+                        </select>
+                    </div>-->
+                </div>
+
+                
+
+                <!--<div class="row">
+                    <div class="col-md-6 mt-5">
+                        <label class="ml-1">Input columns:</label>
+                        <select multiple class="form-control" id="dsInput" ></select>
+                    </div> 
+
+                    <div class="col-md-6 mt-5">
+                        <label class="ml-1">Output columns:</label>
+                        <select class="form-control" id="dsLabel" ></select>
+                    </div> 
+                </div>-->
+                
+
+                
+
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-3">
+                        <button class="btn-success btn-lg btn-block" id="analyze_ds">Analyze</button>
+                    </div>
+                </div>
+
+                <!--<div class="col-md-6  mt-5">
+                    <div class="chart" id="graph_holder">
+                    </div>
+                </div>-->
+
+            </div> 
+        </div> 
+
+        <div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+                <div class="row pt-md-5 mt-md-3" id="charts_section_holder"></div>
+            </div>
+        </div>
+
+
+        <!--<div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row pt-md-5 mt-md-3">
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Histogram</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="histogram_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                       <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Heatmap</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="heatmap_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Correlation</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="correlation_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                     </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Confusion Matrix</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="confusion_matrix_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>-->
+
+        <!--<div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Area</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="area_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                       <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Pie</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="pie_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Stacked</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="stacked_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                     </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Horizontal Bar</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="horizontal_bar_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>-->
+
+        <!--<div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row">
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Bubble</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="bubble_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                       <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Polar</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="polar_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                    </div>
+                </div>
+                </div>
+                <div class="col-xl-3 col-sm-6 p-2">
+                <div class="card card-common">
+                    <div class="card-body">
+                        <div class="chart-card-title">Normal</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="chart" id="normal_chart"></div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-secondary">
+                        <i class="fas fa-expand float-right chart-card-expand"></i>
+                     </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>-->
+
+
+    </div>
+
+    <!-- modal for chart enlarge -->
+    <div class="modal fade" id="analytics-chart-max">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="max-chart-holder"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal -->
+
+    
+    
+</section>
+<!-- end of cards -->

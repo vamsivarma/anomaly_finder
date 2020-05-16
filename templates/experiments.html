@@ -1,0 +1,70 @@
+
+<!-- Experiment section cards -->
+<section>
+    <div class="container-fluid" id="experiments-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-4">
+                <h4 class="text-muted text-center text-uppercase mb-0 d-block d-md-none">Experiments</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto mt-5">
+                <h3 class="text-muted text-center text-uppercase mb-3 d-none d-md-block">Experiments</h3>
+                
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <label class="ml-1">Dataset:</label>
+                        <select class="form-control" id="expDSList" ></select>
+                    </div>
+
+                    <div class="col-md-6 mt-5">
+                        <label class="ml-1">Target:</label>
+                        <select class="form-control" id="expDSLabel" ></select>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mt-5">
+                        <label class="ml-1">Data Split:</label>
+                        <input type="number" step="0.1" class="form-control" id="expSplit" />
+                    </div>
+                    
+                </div>
+                
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-3">
+                        <button class="btn-success btn-lg btn-block" id="expDSLaunch">Launch Experiment</button>
+                    </div>
+                </div>
+            </div> 
+        </div> 
+
+        <div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+                <div class="row pt-md-3 mt-md-3 mb-3" id="expResultsHolder"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal for chart enlarge -->
+    <div class="modal fade" id="exp-result-max">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="max-chart-holder"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of modal -->
+    
+</section>
+<!-- end of cards -->

@@ -80,6 +80,10 @@ body {
   border-radius: 50%;
 }
 
+#myNavbar .nav-tabs {
+  border-bottom: none;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     position: static;
@@ -135,6 +139,55 @@ p.file a {
 }
 
 /* Progress bar - end */
+
+
+/* Start - Styles for page spinner */
+
+#pageSpinnerHolder {
+  width: 100%;
+  height: 100%;
+  z-index: 1100;
+  position: absolute;
+  background: #000;
+  opacity: 0.8;
+  display: none;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+#pageSpinnerHolder .pageSpinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: -75px 0px 0px -75px;
+}
+
+#pageSpinnerHolder .pageSpinnerImage {
+  width: 150px;
+  height: 150px;
+}
+
+#pageSpinnerHolder .pageSpinnerText {
+  position: absolute;
+  top: 110px;
+  left: 42px;
+}
+
+/* Styles only for inline spinner */
+
+#pageSpinnerHolder.inlineSpinnerHolder {
+  border-radius: 15px;
+}
+
+#pageSpinnerHolder.inlineSpinnerHolder .pageSpinner {
+  position: absolute;
+}
+
+/* End - Styles for page spinner */
 
 
 

@@ -1,0 +1,11 @@
+#datasets-holder .add-dataset-button {
+    border: 1px solid;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    color: #000;
+}
+
+#datasets-holder .add-dataset-button a {
+    color: #000;
+}

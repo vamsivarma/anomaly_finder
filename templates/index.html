@@ -4,609 +4,190 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="title icon" href="/static/images/icon-ad-graph.jpeg">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <title>Anamoly Detection</title>
-  </head>
-  <body>
     
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-md navbar-light">
-      <button class="navbar-toggler ml-auto mb-2 bg-light" type="button" data-toggle="collapse" data-target="#myNavbar">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- sidebar -->
-            <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
-              <a href="#" class="navbar-brand text-white d-block mx-auto text-center py-3 mb-4 bottom-border">Fraud Detector</a>
-              <div class="bottom-border pb-3">
-                <img src="/static/images/fabio.jpeg" width="50" class="rounded-circle mr-3">
-                <a href="#" class="text-white">Fabio Luciani</a>
-              </div>
-              <ul class="nav nav-tabs flex-column mt-4" id="nav-holder" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link text-white p-3 mb-2 active" 
-                        href="#dashboard-area" role="tab" data-toggle="tab">
-                        <i class="fas fa-home text-light fa-lg mr-3"></i>Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white p-3 mb-2 sidebar-link"
-                    href="#datasets-area" role="tab" data-toggle="tab" onclick="get_datasets()">
-                        <i class="fas fa-database text-light fa-lg mr-3"></i>Datasets
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white p-3 mb-2 sidebar-link"
-                    href="#analytics-area" role="tab" data-toggle="tab">
-                        <i class="fas fa-chart-line text-light fa-lg mr-3"></i>Analytics
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white p-3 mb-2 sidebar-link"
-                    href="#experiments-area" role="tab" data-toggle="tab">
-                        <i class="fas fa-flask text-light fa-lg mr-3"></i>Experiments
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white p-3 mb-2 sidebar-link"
-                    href="#settings-area" role="tab" data-toggle="tab">
-                        <i class="fas fa-wrench text-light fa-lg mr-3"></i>Settings
-                    </a>
-                </li>
-              </ul>
-
-              <li class="nav-item">
-                <a class="nav-link text-white p-3 mb-2 sidebar-link"
-                href="#" data-toggle="modal" data-target="#ds-upload-modal">
-                    <i class="fas fa-plus-circle text-light fa-lg mr-3"></i> Dataset
-                </a>
-              </li>
-            </div>
-            <!-- end of sidebar -->
-
-            <!-- top-nav -->
-            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto bg-dark fixed-top py-2 top-navbar">
-              <div class="row align-items-center">
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-5">
-                  <form>
-                    <div class="input-group">
-                      <input type="text" class="form-control search-input" placeholder="Search...">
-                      <button type="button" class="btn btn-white search-button"><i class="fas fa-search text-danger"></i></button>
-                    </div>
-                  </form>
-                </div>
-                <div class="col-md-3">
-                  <ul class="navbar-nav">
-                    <li class="nav-item icon-parent"><a href="#" class="nav-link icon-bullet"><i class="fas fa-comments text-muted fa-lg"></i></a></li>
-                    <li class="nav-item icon-parent"><a href="#" class="nav-link icon-bullet"><i class="fas fa-bell text-muted fa-lg"></i></a></li>
-                    <li class="nav-item ml-md-auto"><a href="#" class="nav-link" data-toggle="modal" data-target="#sign-out"><i class="fas fa-sign-out-alt text-danger fa-lg"></i></a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!-- end of top-nav -->
-          </div>
-        </div>
-      </div>
-    </nav>
-    <!-- end of navbar -->
-
-     <!-- modal for dataset upload -->
-     <div class="modal fade" id="ds-upload-modal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Please select the dataset</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <!--<form method="post" action="" enctype="multipart/form-data"
-                    id="ds-upload-form">
-                    <div class="form-group">
-                        <input type="range" class="form-control-range" name="range">
-                    </div>
-                    <div class="form-group">
-                        <input type="file" id="ds-upload-file" class="form-control-file border" name="file" accept=".csv">
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-success"
-                        id="ds-upload-button">UPLOAD</button>
-                    </div>
-                </form>-->
-                <div class="container">
-                    <div class="row">
-                      <div class="col">
-                
-                        <div class="mb-3 mt-3">
-                          <!--<label for="usr">Name:</label>
-                          <input type="text" class="form-control mb-3" id="usr">-->
-                          <div class="form-group mb-3">
-                            <div class="custom-file">
-                              <input type="file" class="custom-file-input" name="file_input" id="file_input" oninput="input_filename();" accept=".csv,.xls,.xlsx">
-                              <label id="file_input_label" class="custom-file-label" for="image">Select file</label>
-                            </div>
-                          </div>
-                
-                          <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Uploading...
-                          </button>
-                
-                          <button type="button" id="cancel_btn" class="btn btn-secondary d-none">Cancel upload</button>
-                
-                        </div>
-                
-                        <div id="progress_wrapper" class="d-none">
-                          <label id="progress_status"></label>
-                          <div class="progress mb-3">
-                            <div id="progress" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
-                        </div>
-                
-                        <div id="alert_wrapper"></div>
-                
-                      </div>
-                    </div>
-                  </div>
-                
-            </div>
-            <div class="modal-footer">
-              <button onclick="upload('{{ request.url }}');" id="upload_btn" class="btn btn-success">Upload</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">CANCEL</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end of modal -->
-
-    <!-- For context menu on data table -->  
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="context-menu">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-    </div>
-
-    <!-- modal for logout -->
-    <div class="modal fade" id="sign-out">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Want to leave?</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <div class="modal-body">
-            Press logout to leave
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-dismiss="modal">Stay Here</button>
-            <button type="button" class="btn btn-danger" onclick="goHome()">Logout</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end of modal -->
-
-    <!-- Tab panes -->
-    <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade show active" id="dashboard-area">
-            <!-- cards -->
-            <section>
-                <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-                    <div class="row pt-md-5 mt-md-3 mb-5">
-                        <div class="col-xl-3 col-sm-6 p-2">
-                        <div class="card card-common">
-                            <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <i class="fas fa-shopping-cart fa-3x text-warning"></i>
-                                <div class="text-right text-secondary">
-                                <h5>Sales</h5>
-                                <h3>$135,000</h3>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="card-footer text-secondary">
-                            <i class="fas fa-sync mr-3"></i>
-                            <span>Updated Now</span>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 p-2">
-                        <div class="card card-common">
-                            <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <i class="fas fa-money-bill-alt fa-3x text-success"></i>
-                                <div class="text-right text-secondary">
-                                <h5>Expenses</h5>
-                                <h3>$39,000</h3>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="card-footer text-secondary">
-                            <i class="fas fa-sync mr-3"></i>
-                            <span>Updated Now</span>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 p-2">
-                        <div class="card card-common">
-                            <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <i class="fas fa-users fa-3x text-info"></i>
-                                <div class="text-right text-secondary">
-                                <h5>Users</h5>
-                                <h3>15,000</h3>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="card-footer text-secondary">
-                            <i class="fas fa-sync mr-3"></i>
-                            <span>Updated Now</span>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 p-2">
-                        <div class="card card-common">
-                            <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <i class="fas fa-chart-line fa-3x text-danger"></i>
-                                <div class="text-right text-secondary">
-                                <h5>Visitors</h5>
-                                <h3>45,000</h3>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="card-footer text-secondary">
-                            <i class="fas fa-sync mr-3"></i>
-                            <span>Updated Now</span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </section>
-            <!-- end of cards -->
-        
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="datasets-area">
-            
-            <!-- tables -->
-            <section>
-                <div class="container-fluid">
-                <div class="row mb-5">
-                    <div class="col-md-4">
-                        <h4 class="text-light text-uppercase mb-0">Datasets</h4>
-                    </div>
-                </div>        
-                <div class="row mb-5">
-                    <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-                        <div class="row align-items-center">
-                            <div class="col-xl-12 col-12 mb-4 mb-xl-0">
-                                <h3 class="text-muted text-center mb-3">Datasets</h3>
-                                <table class="table table-striped bg-light text-center" 
-                                        id="dataset-table-holder">
-                                    <thead>
-                                        <tr class="text-muted">
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Size</th>
-                                            <th>Columns</th>
-                                            <th>Rows</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-               
-            </section>
-            <!-- end of tables --> 
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="analytics-area">
-            <!-- progress / task list -->
-            <section>
-                <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-                    <div class="row mb-4 align-items-center">
-                        <div class="col-xl-6 col-12 mb-4 mb-xl-0">
-                        <div class="bg-dark text-white p-4 rounded">
-                            <h4 class="mb-5">Coversion Rates</h4>
-                            <h6 class="mb-3">Google Chrome</h6>
-                            <div class="progress mb-4" style="height: 20px">
-                            <div class="progress-bar progress-bar-striped font-weight-bold" style="width: 91%">
-                                91%
-                            </div>
-                            </div>
-                            <h6 class="mb-3">Mozilla Firefox</h6>
-                            <div class="progress mb-4" style="height: 20px">
-                            <div class="progress-bar progress-bar-striped font-weight-bold bg-success" style="width: 82%">
-                                82%
-                            </div>
-                            </div>
-                            <h6 class="mb-3">Safari</h6>
-                            <div class="progress mb-4" style="height: 20px">
-                            <div class="progress-bar progress-bar-striped font-weight-bold bg-danger" style="width: 67%">
-                                67%
-                            </div>
-                            </div>
-                            <h6 class="mb-3">IE</h6>
-                            <div class="progress mb-4" style="height: 20px">
-                            <div class="progress-bar progress-bar-striped font-weight-bold bg-info" style="width: 10%">
-                                10%
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-xl-6 col-12">
-                        <h4 class="text-muted p-3 mb-3">Tasks:</h4>
-                        <div class="container-fluid bg-white">
-                            <div class="row py-3 mb-4 task-border align-items-center">
-                            <div class="col-1">
-                                <input type="checkbox" checked>
-                            </div>
-                            <div class="col-sm-9 col-8">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>edit</h6>" data-html="true" data-placement="top"><i class="fas fa-edit fa-lg text-success mr-2"></i></a>
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>delete</h6>" data-html="true" data-placement="top"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="container-fluid bg-white">
-                            <div class="row py-3 mb-4 task-border align-items-center">
-                            <div class="col-1">
-                                <input type="checkbox" checked>
-                            </div>
-                            <div class="col-sm-9 col-8">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>edit</h6>" data-html="true" data-placement="top"><i class="fas fa-edit fa-lg text-success mr-2"></i></a>
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>delete</h6>" data-html="true" data-placement="top"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="container-fluid bg-white">
-                            <div class="row py-3 mb-4 task-border align-items-center">
-                            <div class="col-1">
-                                <input type="checkbox" checked>
-                            </div>
-                            <div class="col-sm-9 col-8">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>edit</h6>" data-html="true" data-placement="top"><i class="fas fa-edit fa-lg text-success mr-2"></i></a>
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>delete</h6>" data-html="true" data-placement="top"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="container-fluid bg-white">
-                            <div class="row py-3 mb-4 task-border align-items-center">
-                            <div class="col-1">
-                                <input type="checkbox" checked>
-                            </div>
-                            <div class="col-sm-9 col-8">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>edit</h6>" data-html="true" data-placement="top"><i class="fas fa-edit fa-lg text-success mr-2"></i></a>
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>delete</h6>" data-html="true" data-placement="top"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="container-fluid bg-white">
-                            <div class="row py-3 mb-4 task-border align-items-center">
-                            <div class="col-1">
-                                <input type="checkbox" checked>
-                            </div>
-                            <div class="col-sm-9 col-8">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>edit</h6>" data-html="true" data-placement="top"><i class="fas fa-edit fa-lg text-success mr-2"></i></a>
-                            </div>
-                            <div class="col-1">
-                                <a href="#" data-toggle="tooltip" title="<h6>delete</h6>" data-html="true" data-placement="top"><i class="fas fa-trash-alt fa-lg text-danger"></i></a>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </section>
-            <!-- end of progress / task list -->
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="experiments-area">
-            <!-- activities / quick post -->
-            <section>
-                <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-                    <div class="row align-items-center mb-5">
-                        <div class="col-xl-7">
-                        <h4 class="text-muted mb-4">Recent Customer Activities</h4>
-                        <div id="accordion">
-                            <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-block bg-secondary text-light text-left" data-toggle="collapse" data-target="#collapseOne">
-                                <img src="images/cust1.jpeg" width="50" class="mr-3 rounded">
-                                John posted a new comment
-                                </button>
-                            </div>
-                            <div class="collapse show" id="collapseOne" data-parent="#accordion">
-                                <div class="card-body">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis earum modi delectus fugiat consectetur eaque harum obcaecati, saepe id vitae, dolore aliquam! Quos, doloribus quisquam.
-                                </div>                      
-                            </div>
-                            </div>
-                            <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-block bg-secondary text-light text-left" data-toggle="collapse" data-target="#collapseTwo">
-                                <img src="images/cust2.jpeg" width="50" class="mr-3 rounded">
-                                Mark posted a new comment
-                                </button>
-                            </div>
-                            <div class="collapse" id="collapseTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis earum modi delectus fugiat consectetur eaque harum obcaecati, saepe id vitae, dolore aliquam! Quos, doloribus quisquam.
-                                </div>                      
-                            </div>
-                            </div>
-                            <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-block bg-secondary text-light text-left" data-toggle="collapse" data-target="#collapseThree">
-                                <img src="images/cust3.jpeg" width="50" class="mr-3 rounded">
-                                Monica posted a new comment
-                                </button>
-                            </div>
-                            <div class="collapse" id="collapseThree" data-parent="#accordion">
-                                <div class="card-body">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis earum modi delectus fugiat consectetur eaque harum obcaecati, saepe id vitae, dolore aliquam! Quos, doloribus quisquam.
-                                </div>                      
-                            </div>
-                            </div>
-                            <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-block bg-secondary text-light text-left" data-toggle="collapse" data-target="#collapseFour">
-                                <img src="images/cust4.jpeg" width="50" class="mr-3 rounded">
-                                Vivien posted a new comment
-                                </button>
-                            </div>
-                            <div class="collapse" id="collapseFour" data-parent="#accordion">
-                                <div class="card-body">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis earum modi delectus fugiat consectetur eaque harum obcaecati, saepe id vitae, dolore aliquam! Quos, doloribus quisquam.
-                                </div>                      
-                            </div>
-                            </div>
-                            <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-block bg-secondary text-light text-left" data-toggle="collapse" data-target="#collapseFive">
-                                <img src="images/cust5.jpeg" width="50" class="mr-3 rounded">
-                                Nick posted a new comment
-                                </button>
-                            </div>
-                            <div class="collapse" id="collapseFive" data-parent="#accordion">
-                                <div class="card-body">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis earum modi delectus fugiat consectetur eaque harum obcaecati, saepe id vitae, dolore aliquam! Quos, doloribus quisquam.
-                                </div>                      
-                            </div>
-                            </div>
-                            <div class="card">
-                            <div class="card-header">
-                                <button class="btn btn-block bg-secondary text-light text-left" data-toggle="collapse" data-target="#collapseSix">
-                                <img src="images/cust6.jpeg" width="50" class="mr-3 rounded">
-                                Ann posted a new comment
-                                </button>
-                            </div>
-                            <div class="collapse" id="collapseSix" data-parent="#accordion">
-                                <div class="card-body">
-                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reiciendis earum modi delectus fugiat consectetur eaque harum obcaecati, saepe id vitae, dolore aliquam! Quos, doloribus quisquam.
-                                </div>                      
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-xl-5 mt-5">
-                        <div class="card rounded">
-                            <div class="card-body">
-                            <h5 class="text-muted text-center mb-4">Quick Status Post</h5>
-                            <ul class="list-inline text-center py-3">
-                                <li class="list-inline-item mr-4">
-                                <a href="#">
-                                    <i class="fas fa-pencil-alt text-success"></i>
-                                    <span class="h6 text-muted">Status</span>
-                                </a>
-                                </li>
-                                <li class="list-inline-item mr-4">
-                                <a href="#">
-                                    <i class="fas fa-camera text-info"></i>
-                                    <span class="h6 text-muted">Photo</span>
-                                </a>
-                                </li>
-                                <li class="list-inline-item">
-                                <a href="#">
-                                    <i class="fas fa-map-marker-alt text-primary"></i>
-                                    <span class="h6 text-muted">Check-in</span>
-                                </a>
-                                </li>
-                            </ul>
-                            <form>
-                                <div class="form-group">
-                                <input type="text" class="form-control py-2 mb-3" placeholder="What's Your Status...">
-                                <button type="button" class="btn btn-block text-uppercase font-weight-bold text-light bg-info py-2 mb-5">Submit Post</button>
-                                </div>
-                            </form>
-                            <div class="row">
-                                <div class="col-6">
-                                <div class="card bg-light">
-                                    <i class="far fa-calendar-alt fa-8x text-warning d-block m-auto py-3"></i>
-                                    <div class="card-body">
-                                    <p class="card-text text-center font-weight-bold text-uppercase">Mon, may 26</p>
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="col-6">
-                                <div class="card bg-light">
-                                    <i class="far fa-clock fa-8x text-danger d-block m-auto py-3"></i>
-                                    <div class="card-body">
-                                    <p class="card-text text-center font-weight-bold text-uppercase">3:50 am</p>
-                                    </div>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </section>
-            <!-- end of activities / quick post -->
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="settings-area">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                  <h4 class="text-light text-uppercase mb-0">Settings</h4>
-                </div>
-            </div>
-        </div>
-    </div>   
-    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-    <script src="/static/js/script.js"></script>
-    <script src="/static/js/file_upload.js"></script>
+    </script>-->
+    <script src="/static/lib/jquery-3.4.1.min.js"></script>
+
+    <!--<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+    <script src="/static/lib/plotly-latest.min.js"></script>
+    
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>-->
+    <script src="/static/lib/d3.min.js"></script>
+
+    <!--<script src="/static/lib/jquery.scrollTableBody-1.0.0.js"></script>-->
+
+    <script src="/static/lib/jquery.floatThead.min.js"></script>
+
+    <script> 
+
+        $(function() {
+
+          // Adding the Nav bar
+          $("#main-nav-holder").load("/nav"); 
+
+          // Adding the dashboard section content
+          //$("#dashboard-area").load("/dashboard"); 
+
+          // Adding the datasets section content
+          $("#datasets-area").load("/datasets"); 
+
+          // Adding the explore section content
+          $("#explore-area").load("/explore");
+
+          // Adding the experiments section content
+          $("#experiments-area").load("/experiments");
+          
+          // Adding the analytics section content
+          $("#analytics-area").load("/analytics"); 
+
+          // Adding the settings section content
+          $("#settings-area").load("/settings"); 
+
+          // Adding the upload modal
+          $("#ds-upload-modal").load("/upload"); 
+        });
+
+    </script> 
+
+    <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="/static/lib/bootstrap.min.css">
+
+    <!--<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>-->
+    <script defer src="/static/lib/all.js"></script>
+
+    <!--<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">-->
+    <link rel="stylesheet" href="/static/lib/google_fonts.css">
+
+    <link rel="stylesheet" href="/static/css/style.css?1302">
+
+    <!-- styles for common components tables and charts-->
+    <link rel="stylesheet" href="/static/css/chart.css?1302">
+    <link rel="stylesheet" href="/static/css/table.css?1302">
+
+    <link rel="stylesheet" href="/static/css/datasets.css?1302">
+
+    <link rel="stylesheet" href="/static/css/explore.css?1302">
+    <link rel="stylesheet" href="/static/css/experiments.css?1302">
+    <link rel="stylesheet" href="/static/css/analytics.css?1302">
+    <link rel="stylesheet" href="/static/css/settings.css?1302">
+
+    <title>Anomaly Detection</title>
+  </head>
+  <body>
+    <div class="main-holder-elem" id="main-holder-elem">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-md navbar-light" id="main-nav-holder">
+        </nav>
+        <!-- end of navbar -->
+
+        <!-- modal for dataset upload -->
+        <div class="modal fade" id="ds-upload-modal">  
+        </div>
+        <!-- end of modal -->
+
+        <!-- For context menu on data table -->  
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="context-menu">
+            <a class="dropdown-item" href="#">Data Exploration</a>
+            <a class="dropdown-item" href="#">Data Manipulation</a>
+            <a class="dropdown-item" href="#">Machine Learning</a>
+            <a class="dropdown-item" href="#">Deep Learning</a>
+        </div>
+
+        <!-- modal for logout -->
+        <div class="modal fade" id="sign-out">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure you want to leave?</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                Press logout to leave
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Stay Here</button>
+                <button type="button" class="btn btn-danger" onclick="navModule.goHome()">Logout</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- end of modal -->
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+            <!--<div role="tabpanel" class="tab-pane fade" id="dashboard-area"> 
+                 Dashboard content will be added here
+            </div>--> 
+            <div role="tabpanel" class="tab-pane fade show active" id="datasets-area">
+                <!-- Datasets content will be added here-->
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="explore-area">
+                <!-- Explore content will be added here-->
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="analytics-area">
+                <!-- Analytics content will be added here-->
+            </div>
+
+            <div role="tabpanel" class="tab-pane fade" id="experiments-area">
+                 <!-- Experiments content will be added here -->
+            </div>
+            
+            <div role="tabpanel" class="tab-pane fade" id="settings-area">
+                <!-- Settings content will be added here-->
+            </div>
+        </div> 
+    </div>  
+
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>-->
+    <script src="/static/lib/popper.min.js"></script>
+
+    <!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>-->
+    <script src="/static/lib/bootstrap.min.js"></script>
+    
+    <!-- Load all the scripts of all the pages -->
+    <!-- @TODO: Need to do this more effiently and use lazy loading if possible -->
+    <script src="/static/js/nav.js?1302"></script>
+
+    <script src="/static/js/api.js?1302"></script>
+
+    <!-- Script for all the metadata and datamodels common to all sections -->
+    <script src="/static/js/common.js?1302"></script>
+
+    <!-- Script common to all the tables in the application-->
+    <script src="/static/js/table.js?1302"></script>
+
+    <!-- Script common to all the charts in the application-->
+    <script src="/static/js/chart.js?1302"></script>
+    
+    <script src="/static/js/datasets.js?1302"></script>
+
+    <script src="/static/js/explore.js?1302"></script>
+
+    <script src="/static/js/analytics.js?1302"></script>
+
+    <script src="/static/js/experiments.js?1302"></script>
+
+    <script src="/static/js/settings.js?1302"></script>
+
+    <!--<script src="/static/js/ml.js?1302"></script>-->
+
+    <!-- Start: HTML for page spinner -->
+    <div id="pageSpinnerHolder" class="pageSpinnerHolder">
+        <div class="pageSpinner">
+            <img src="/static/images/loader_chart.gif" class="pageSpinnerImage" />
+            <div class="pageSpinnerText">Loading...</div>
+        </div>
+    </div>
+    <!-- End: HTML for page spinner -->
+
   </body>
 </html>
 

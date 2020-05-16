@@ -34,12 +34,14 @@ function upload(url) {
 
   // Reject if the file input is empty & throw alert
   if (!input.value) {
-
     show_alert("No file selected", "warning")
-
     return;
-
   }
+
+  var spinnerElem = $('.pageSpinnerHolder');
+
+  // Show the spinner before API call
+  spinnerElem.show();
 
   // Create a new FormData instance
   var data = new FormData();
@@ -100,6 +102,9 @@ function upload(url) {
   // request load handler (transfer complete)
   request.addEventListener("load", function (e) {
 
+    // Hide the spinner after API call
+    spinnerElem.hide();
+
     if (request.status == 200) {
       show_alert(`${request.response.message}`, "success");
       $('#ds-upload-modal').modal('hide');
@@ -119,18 +124,23 @@ function upload(url) {
   // request error handler
   request.addEventListener("error", function (e) {
 
+    // Hide the spinner after API call
+    spinnerElem.hide();
+    
     reset();
-
-    show_alert(`Error uploading file`, "warning");
+    
+    show_alert("Error uploading file", "warning");
 
   });
 
   // request abort handler
   request.addEventListener("abort", function (e) {
 
-    reset();
+    // Hide the spinner after API call
+    spinnerElem.hide();
 
-    show_alert(`Upload cancelled`, "primary");
+    reset();
+    show_alert("Upload cancelled", "primary");
 
   });
 
@@ -139,6 +149,9 @@ function upload(url) {
   request.send(data);
 
   cancel_btn.addEventListener("click", function () {
+
+    // Hide the spinner after API call
+    spinnerElem.hide();
 
     request.abort();
 

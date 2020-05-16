@@ -1,0 +1,522 @@
+<section>
+    <div class="container-fluid">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-4">
+                <h4 class="text-muted text-center text-uppercase mb-0 d-block d-md-none">Settings</h4>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                    <h3 class="text-muted text-center text-uppercase mb-3 mt-5 d-none d-md-block">Settings</h3>
+                    <form class="needs-validation" novalidate action="">
+                        <div id="accordion">
+                            <div class="card">
+                            <div class="card-header collapsed" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1" id="heading1">
+                                <h5 class="mb-0">
+                                <span class="settings-section-title">
+                                    System
+                                </span>
+                                <span class="float-right mt-2">
+                                    <span class="commons cplus d-block">
+                                        <i class="fas fa-plus-square"></i>
+                                    </span>
+                                    <span class="commons cminus d-none">
+                                        <i class="fas fa-minus-square"></i>
+                                    </span>
+                                </span>
+                                </h5>
+                            </div>
+                        
+                            <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cUseGPU">Use GPU:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch  float-right">
+                                                <input type="checkbox" id="cUseGPU" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cGPUType">GPU Type:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-control float-right" id="cGPUType" required>
+                                                <option value="TK80">NVIDIA Tesla K80</option>
+                                                <option value="TP100">NVIDIA Tesla P100</option>
+                                                <option value="TT4">NVIDIA Tesla T4</option>
+                                                <option value="TV100">NVIDIA Tesla V100</option>
+                                            </select>
+                                            <small id="cGPUTypeHelpBlock" class="form-text text-muted">
+                                                GPU's are ordered from basic to powerful
+                                            </small>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please choose a GPU type</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-header collapsed"  data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2" id="heading2">
+                                <h5 class="mb-0">
+                                <span class="settings-section-title">
+                                    Preprocessing
+                                </span>
+                                <span class="float-right mt-2">
+                                    <span class="commons cplus d-block">
+                                        <i class="fas fa-plus-square"></i>
+                                    </span>
+                                    <span class="commons cminus d-none">
+                                        <i class="fas fa-minus-square"></i>
+                                    </span>
+                                </span>
+                                </h5>
+                            </div>
+                            <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordion">
+                                <div class="card-body">
+                                    <!--<div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cT">T:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="number" class="form-control float-right" id="cT" required>
+                                            <small id="cTHelpBlock" class="form-text text-muted">
+                                                T value help text...
+                                            </small>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please choose a value for T</div>
+                                        </div>
+                                    </div>-->
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cN">Normalize:</label>
+                                        </div>  
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cN" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="card">
+                            <div class="card-header collapsed" id="heading3"  data-toggle="collapse" data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                                <h5 class="mb-0">
+                                <span class="settings-section-title">
+                                    Features (X)
+                                </span>
+                                <span class="float-right mt-2">
+                                    <span class="commons cplus d-block">
+                                        <i class="fas fa-plus-square"></i>
+                                    </span>
+                                    <span class="commons cminus d-none">
+                                        <i class="fas fa-minus-square"></i>
+                                    </span>
+                                </span>
+                                </h5>
+                            </div>
+                            <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cInputCols">Input Columns:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select multiple class="form-control float-right" id="cInputCols" required>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please choose at least one input column</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header collapsed" id="heading4"  data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                                <h5 class="mb-0">
+                                    <span class="settings-section-title">
+                                        Labels (Y)
+                                    </span>
+                                    <span class="float-right mt-2">
+                                        <span class="commons cplus d-block">
+                                            <i class="fas fa-plus-square"></i>
+                                        </span>
+                                        <span class="commons cminus d-none">
+                                            <i class="fas fa-minus-square"></i>
+                                        </span>
+                                    </span>
+                                </h5>
+                                </div>
+                                <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cOutputCols">Output Columns:</label>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <select class="form-control float-right" id="cOutputCols" required>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                            </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please choose an output column</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cSaveLog">Save Log:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cSaveLog" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cSaveDB">Export Predictions to DB:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cSaveDB" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cSaveCSV">Export Predictions to CSV:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cSaveCSV" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>     
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header collapsed" id="heading5"  data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                <h5 class="mb-0">
+                                    <span class="settings-section-title">
+                                        Visualization
+                                    </span>
+                                    <span class="float-right mt-2">
+                                        <span class="commons cplus d-block">
+                                            <i class="fas fa-plus-square"></i>
+                                        </span>
+                                        <span class="commons cminus d-none">
+                                            <i class="fas fa-minus-square"></i>
+                                        </span>
+                                    </span>
+                                </h5>
+                                </div>
+                                <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordion">
+                                <div class="card-body">
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cDatasetV">Dataset View:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cDatasetV" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>     
+                                    </div>
+                                    
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cHistoryV">History View:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cHistoryV" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>     
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cVerbose">Verbose:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cVerbose" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>     
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header collapsed" id="heading6"  data-toggle="collapse" data-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                                <h5 class="mb-0">
+                                    <span class="settings-section-title">
+                                        Model
+                                    </span>
+                                    <span class="float-right mt-2">
+                                        <span class="commons cplus d-block">
+                                            <i class="fas fa-plus-square"></i>
+                                        </span>
+                                        <span class="commons cminus d-none">
+                                            <i class="fas fa-minus-square"></i>
+                                        </span>
+                                    </span>
+                                </h5>
+                                </div>
+                                <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordion">
+                                <div class="card-body">
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cModelType">Model Type:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-control float-right" id="cModelType" required>
+                                                <option value="FF">Feed Forward</option>
+                                                <option value="RNN">Recurrent Neural Network</option>
+                                                <option value="CNN">Convolutional Neural Network</option>
+                                                <option value="LSTM">Long Short Term Memory</option>
+                                                <option value="AE">Auto Encoders</option>
+                                                <option value="MLP">Multi Layer Perceptron</option>
+                                            </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please choose a model type</div>
+                                        </div>     
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cHC">N Hidden:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="number" class="form-control float-right" id="cHC" required>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please provide a value for layer count</div>
+                                        </div>     
+                                    </div>
+
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header collapsed" id="heading7"  data-toggle="collapse" data-target="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                                <h5 class="mb-0">
+                                    <span class="settings-section-title">
+                                        Training
+                                    </span>
+                                    <span class="float-right mt-2">
+                                        <span class="commons cplus d-block">
+                                            <i class="fas fa-plus-square"></i>
+                                        </span>
+                                        <span class="commons cminus d-none">
+                                            <i class="fas fa-minus-square"></i>
+                                        </span>
+                                    </span>
+                                </h5>
+                                </div>
+                                <div id="collapse7" class="collapse" aria-labelledby="heading7" data-parent="#accordion">
+                                <div class="card-body">
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cTA">Train Algorithm:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-control float-right" id="cTA" required>
+                                                <option>Adam</option>
+                                                <option>AdaGrad</option>
+                                                <option>SGD</option>
+                                            </select>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please select a train algorithm</div>
+                                        </div>     
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cEpochsCount">No of Epochs:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="number" class="form-control float-right" id="cEpochsCount" required>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please enter no of epochs</div>
+                                        </div>     
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cLR">Learning Rate:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="number" step="0.01" class="form-control float-right" id="cLR" required>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please specify a learning rate</div>
+                                        </div>     
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cSBM">Save best model:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cSBM" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>     
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cES">Early stopping:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="switch float-right">
+                                                <input type="checkbox" id="cES" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>     
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <div class="col-md-6">
+                                            <label for="cTrainBS">Train Batch size:</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="number" class="form-control float-right" id="cTrainBS" required>
+                                            <div class="valid-feedback">Looks good!</div>
+                                            <div class="invalid-feedback">Please specify a batch size for training</div>
+                                        </div>     
+                                    </div>
+
+                                </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header collapsed" id="heading8"  data-toggle="collapse" data-target="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                                    <h5 class="mb-0">
+                                        <span class="settings-section-title">
+                                        Testing
+                                        </span>
+                                        <span class="float-right mt-2">
+                                        <span class="commons cplus d-block">
+                                            <i class="fas fa-plus-square"></i>
+                                        </span>
+                                        <span class="commons cminus d-none">
+                                            <i class="fas fa-minus-square"></i>
+                                        </span>
+                                        </span>
+                                    </h5>
+                                    </div>
+                                    <div id="collapse8" class="collapse" aria-labelledby="heading8" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="form-group form-row">
+                                            <div class="col-md-6">
+                                                <label for="cTestBS">Test Batch size:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input type="number" class="form-control float-right" id="cTestBS" required>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please specify a batch size for test</div>
+                                            </div>     
+                                        </div>
+
+                                        <div class="form-group form-row">
+                                            <div class="col-md-6">
+                                                <label for="cNeuralModel">Neural Model:</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <select class="form-control float-right" id="cNeuralModel">
+                                                    <option value="Inception">Inception</option>
+                                                </select>
+                                                <div class="valid-feedback">Looks good!</div>
+                                                <div class="invalid-feedback">Please choose a neural model type</div>
+                                            </div>     
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success float-right mt-3 mb-3" id="s-form-submit" type="submit">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            if (form.checkValidity() === false) {   
+              event.stopPropagation();
+              alert('Form is not valid');
+            } else {
+                // We reach here if all the validations are satisfied
+                //Make a API call to save the current settings
+                settingsModule.save_settings();
+            }
+
+            form.classList.add('was-validated');
+
+            event.preventDefault();
+            event.stopPropagation();
+          }, false);
+        });
+      }, false);
+    })();
+</script>
