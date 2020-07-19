@@ -1,5 +1,5 @@
 --- 
-entrypoint: "gunicorn -t 180 -b:$PORT basic:app"
+entrypoint: "gunicorn -t 180 -b:$PORT app:app"
 env: flex
 runtime: python
 runtime_config: 

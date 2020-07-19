@@ -13,13 +13,11 @@ from plotly import utils as pu
 #sys.path.append("..")
 
 import sys, os
-sys.path.append(os.path.join(sys.path[0],'backends', 'Code'))
-
-#pdb.set_trace()
+sys.path.append(os.path.join(os.getcwd(),'backends', 'Code'))
 
 # Adding deep learning related packages
-from backends.Code import ad_run as ar
-#import ad_run as ar
+#from backends.Code import ad_run as ar
+import ad_run as ar
 adObj = ar.AD_Run()
 
 plot_map = {
