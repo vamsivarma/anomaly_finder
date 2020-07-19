@@ -13,21 +13,40 @@ import charts_wrapper as cw
 import eda_wrapper as edaw
 
 import ml_wrapper as mlw
+import dl_wrapper as dlw
 
 import traceback
+
+# True for Local Mongo
+# False for Remote Atlas instance
+mongoFlag = False
+
+# This is true in developoment environment
+# False in production
+developFlag = False
+templates_folder = ''
+
+current_dir = os.path.abspath(os.path.dirname(__file__))
+
+if(developFlag):
+    template_dir = os.path.join(current_dir, 'templates')
+else:
+    template_dir = os.path.join(current_dir, 'static', 'dist', 'templates')
+
+print(template_dir)
 
 db = {}
 collection_list = [] 
 
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__, static_url_path='/static', template_folder=template_dir)
 app.config['UPLOAD_FOLDER'] = 'tmp'
 
 ALLOWED_EXTENSIONS = ['csv', 'xls']
 
 # Wrapper for all the code realted to MongoDB
-db_name = "ad2020" # For atlas
+db_name = "ad2020"
 #db_name = "anomaly_detection" # For local machine
-db = mdb.Mongo_Wrapper(db_name)
+db = mdb.Mongo_Wrapper(db_name, mongoFlag)
 
 # Wrapper for all the charts
 charts_obj = cw.Charts_Wrapper()
@@ -38,28 +57,33 @@ eda_obj = edaw.EDA_Wrapper()
 # ML wrapper for Experiments section
 ml_obj = mlw.ML_Wrapper()
 
+# DL wrapper for deep learning train
+dl_obj = dlw.DL_Wrapper()
 
-'''
-models = {}
-def load():
-    
-    models['CNN'] = load_model('models/modelCNN.hdf5')
-    models['RNN'] = load_model('models/modelRNN.hdf5')
-    models['FF'] = load_model('models/modelFF.hdf5')
-
-    global graph
-    graph = tf.get_default_graph()
-'''
-
-
-
+# Login page
 @app.route('/')
 def landing():
-    return render_template('login.html')
-    #return render_template('index.html')
+    return render_template('login.html', developFlag = developFlag)
+
+
+# Routes for pages, Index and Landing page (Login form)
+@app.route('/index')
+def index():
+    '''
+    if not session.get('logged_in'):
+        return landing()
+    else:  
+        return render_template('index.html')
+    '''
+    return render_template('index.html', developFlag = developFlag)
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return landing()
+
 
 # Loading HTML templates for each section like Datasets, Analytics etc..,
-
 @app.route('/nav')
 def nav():
     return render_template('nav.html')
@@ -80,6 +104,10 @@ def explore():
 def experiments():
     return render_template('experiments.html')
 
+@app.route('/predict')
+def predict():
+    return render_template('predict.html')
+
 @app.route('/analytics')
 def analytics():
     return render_template('analytics.html')
@@ -91,24 +119,6 @@ def settings():
 @app.route('/upload')
 def upload():
     return render_template('upload.html')
-
-
-# Routes for pages, Index and Landing page (Login form)
-@app.route('/index')
-def index():
-    '''
-    if not session.get('logged_in'):
-        return landing()
-    else:  
-        return render_template('index.html')
-    '''
-    return render_template('index.html')
-
-@app.route("/logout")
-def logout():
-    session['logged_in'] = False
-    return landing()
-
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -143,9 +153,6 @@ def dsupload():
             
             try:
                 # Connect to Mongo DB 
-                #db_connect()
-                db = mdb.Mongo_Wrapper(db_name)
-
                 fname = file.filename.rsplit('.', 1)[0]
                 print(fname)
                 fext = file.filename.rsplit('.', 1)[1] 
@@ -192,45 +199,6 @@ def get_datasets():
                     print("type error: " + str(e))
                     print(traceback.format_exc())
 
-# ML model prediction in Experiments page
-# Commenting this for now
-'''
-@app.route('/predict', methods=['POST'])
-def predict():
-    if request.method == 'POST':
-        
-        print("Predict called")
-        try:
-            response_obj = {
-                "fr": 0,
-                "en": [],
-                "es": 0
-            }
-
-            input_params = request.get_json(force=True)
-            word = input_params['word']
-            model_name = input_params['model']
-
-            model = models[model_name]
-
-            if model_name == 'FF':
-                arr = word_to_array(word).reshape(1,26*12)
-            else:
-                arr = word_to_array(word).reshape(1,26,12)
-            with graph.as_default():
-                prediction = model.predict(arr)
-
-            response_obj["fr"] = round(100*prediction[0, 0],2)
-            response_obj["en"] = round(100*prediction[0, 1],2)
-            response_obj["es"] = round(100*prediction[0, 2],2)
-        
-            return make_response(jsonify(response_obj), 200)
-
-        except Exception as e:
-                    print("type error: " + str(e))
-                    print(traceback.format_exc())
-'''
-
 # Routes for settings page
 # From Mongo DB
 @app.route('/get_settings', methods=['POST'])
@@ -269,7 +237,7 @@ def get_settings():
 
 def get_user_config(c_dict):
     c_name = "ad_settings"
-    config_obj = db.get_one(c_name, c_dict)
+    config_obj = db.get_one(c_name, c_dict, mongoFlag)
     return config_obj
 
 
@@ -310,7 +278,7 @@ def save_settings():
 def save_user_config(c_dict, sconfig):
     # Collection where setting are saved
     c_name = "ad_settings"
-    config_obj = db.save_one(c_name, c_dict, sconfig)
+    config_obj = db.save_one(c_name, c_dict, sconfig, mongoFlag)
     return config_obj
 
 # Routes for Analytics page
@@ -382,14 +350,63 @@ def launch_experiment():
 
     return make_response(jsonify(expJSON), 200)
 
+# Run
+@app.route('/run_experiment', methods=['POST'])
+def run_experiment():
+    
+    input_params = request.get_json(force=True)
+
+    # Experiments to be rendered
+    e_list = input_params['e_list']
+    
+    # Selected dataset
+    c_name = input_params['d_name']
+
+    # Selected target column
+    label_col = input_params['label_col']
+
+    # Data split
+    d_split = input_params['d_split']
+
+    #c_name = "regression_analysis" # Need to get this from interface
+    c_df = db.get(c_name)
+
+    # Get all the experiments based on user selection (all or individual)
+    expJSON = dl_obj.run_experiment(e_list, c_df, label_col, d_split)
+
+    return make_response(jsonify(expJSON), 200)
+
+
+# Run
+@app.route('/launch_predict', methods=['POST'])
+def launch_predict():
+    
+    input_params = request.get_json(force=True)
+
+    # Experiments to be rendered
+    pred_list = input_params['pred_list']
+    
+    # Train dataset
+    dtrain_name = input_params['dtrain_name']
+
+    # Test dataset
+    dtest_name = input_params['dtest_name']
+
+    train_df = db.get(dtrain_name)
+    
+    test_df = db.get(dtest_name)
+
+    # @TODO:Verify whether the fields in train and test are matching 
+    # before invoking anything
+
+    # Get all the experiments based on user selection (all or individual)
+    predJSON = dl_obj.launch_predict(pred_list, dtrain_name, dtest_name)
+
+    return make_response(jsonify(predJSON), 200)
+
 
 if __name__ == '__main__':
 
     app.secret_key = 'thisisasupersecret007'
-
-    #print('Loading model...')
-    #load()
-
-    #get_user_config()
-
+    
     app.run(debug=False)

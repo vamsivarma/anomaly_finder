@@ -1,16 +1,16 @@
-from pymongo import MongoClient
+from pymongo import MongoClient as mc
 import csv
 import pandas as pd
-import pymongo
+#import pymongo
 import json
 import os
-from hurry.filesize import size
 
 from pandas import json_normalize
 
 class Mongo_Wrapper:
 
     db = ""
+    dbName = ""
 
     # Need to maintain a common map for this
     # This is also present in chart_wrapper
@@ -27,9 +27,18 @@ class Mongo_Wrapper:
         #@TODO: If there are more records then insert 1000 records at a time
         cObj.insert_many(data)  
     
-    def save_one(self, cName, qObj, sObj): 
-        
-        cObj = self.db[cName]
+    def save_one(self, cName, qObj, sObj, localFlag): 
+
+        cObj = {}
+
+        # Only for configurations we use remote DB
+        # Only added for demo
+        # @TODO: need to remove this
+        if localFlag:
+            db = self.get_remote_db()
+            cObj = db[cName]
+        else:
+            cObj = self.db[cName]
         
         newvalues = { "$set": sObj }
 
@@ -37,14 +46,25 @@ class Mongo_Wrapper:
         cObj.update_one(qObj, newvalues)
 
         # Once update get the new settings from db
-        config_obj = self.get_one(cName, qObj)
+        config_obj = self.get_one(cName, qObj, localFlag)
 
         return config_obj
         
 
-    def get_one(self, cName, qObj):
-        
-        data = self.db[cName].find(qObj)
+    def get_one(self, cName, qObj, localFlag):
+
+        # Only for configurations we use remote DB
+        # Only added for demo
+        # @TODO: need to remove this
+        # db = self.get_remote_db()
+
+        data = {}
+
+        if localFlag:
+            db = self.get_remote_db()
+            data = db[cName].find(qObj)
+        else:
+           data = self.db[cName].find(qObj)
 
         result = []
         
@@ -65,7 +85,7 @@ class Mongo_Wrapper:
         
         # This(10000) is only for initial testing
         # @TODO: Need to remove this after integration of charts
-        data = list(self.db[cName].find({})) #.limit(5000)) #.limit(1000))
+        data = list(self.db[cName].find({}).limit(50000)) #.limit(1000))
 
         #print(len(data))
         result = []
@@ -135,7 +155,7 @@ class Mongo_Wrapper:
         #print(collection_obj['columns'])
 
         collection_obj['col_count'] = len(collection_obj['columns'])
-        collection_obj['size'] = size(colstats['size'])
+        collection_obj['size'] = colstats['size']
         collection_obj['row_count'] = colstats['count']
 
         return collection_obj
@@ -170,10 +190,22 @@ class Mongo_Wrapper:
 
         return df
 
+    # Only for demo
+    # Need to remove this later
+    def get_remote_db(self):
+        connection = mc("mongodb://adadmin:adadmin@ad2020-shard-00-00-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-01-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-02-zmesm.gcp.mongodb.net:27017/test?ssl=true&replicaSet=ad2020-shard-0&authSource=admin&retryWrites=true&w=majority")
+
+        db = connection[self.dbName]
+
+        return db
           
-    def __init__(self, dbName):
-        # Local
-        #connection = MongoClient('localhost',27017)
-        # Mongo Atlas cloud
-        connection = pymongo.MongoClient("mongodb://adadmin:adadmin@ad2020-shard-00-00-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-01-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-02-zmesm.gcp.mongodb.net:27017/test?ssl=true&replicaSet=ad2020-shard-0&authSource=admin&retryWrites=true&w=majority")
+    def __init__(self, dbName, localFlag):
+
+        if localFlag:
+            connection = mc('localhost',27017)
+        else:
+            connection = mc("mongodb://adadmin:adadmin@ad2020-shard-00-00-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-01-zmesm.gcp.mongodb.net:27017,ad2020-shard-00-02-zmesm.gcp.mongodb.net:27017/test?ssl=true&replicaSet=ad2020-shard-0&authSource=admin&retryWrites=true&w=majority")
+
+        self.dbName = dbName
+
         self.db = connection[dbName]

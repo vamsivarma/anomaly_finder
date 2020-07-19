@@ -10,6 +10,14 @@ import ml_wrapper as mlw
 
 ml_obj = mlw.ML_Wrapper()
 
+
+def plot_results(df, xlabel, ylabel1, ylabel2, plot_map):
+
+    data = [go.Scatter(x=df[xlabel], y=df[ylabel1], name=plot_map[ylabel1]), 
+            go.Scatter(x=df[xlabel], y=df[ylabel2], name=plot_map[ylabel2])]
+
+    return data
+
 def get_box(charts_df, label_col):
     label_values = list(charts_df[label_col])
 
@@ -26,6 +34,13 @@ def get_line(charts_df, label_col):
     x = np.arange(10)
 
     data = go.Scatter(x=x, y=x**2)
+
+    return data
+
+def get_lines(charts_df, label_col):
+    x = np.arange(10)
+
+    data = [go.Scatter(x=x, y=x**2, name="Square"), go.Scatter(x=x, y=x**3, name="Cube")]
 
     return data
 
@@ -243,7 +258,8 @@ class Charts_Wrapper:
         'box': ['Integer', 'Float'],
         'heatmap': ['Integer', 'Float'],
         'field': ['Categorical', 'Boolean', 'Integer', 'Float'],
-        'feature': ['Categorical', 'Boolean', 'Integer', 'Float']
+        'feature': ['Categorical', 'Boolean', 'Integer', 'Float'],
+        'lines': ['Categorical', 'Boolean', 'Integer', 'Float']
     }
 
     def create_plot(self, charts_list, charts_df, col_meta, label_col):
@@ -278,6 +294,7 @@ class Charts_Wrapper:
 
     charts_dict = {
         'line': get_line,
+        'lines': get_lines,
         'bar': get_bar,
         'scatter': get_scatter,
         'histogram': get_histogram,
