@@ -99,20 +99,25 @@ def get_histogram(charts_df, label_col):
 
 
 def get_heatmap(charts_df, label_col):
+    
+    # Selecting only numerical features
+    h_df = charts_df.select_dtypes(include=['float64', 'float32']) # , 'int64', 'int32'
+    #h_df = h_df.fillna(0)
 
-    corr_df = charts_df.corr()
+    corr_df = h_df.corr()
     corr_df = list(corr_df.values)
 
     for i in range(0, len(corr_df)):
         corr_df[i] = list(corr_df[i])
 
-    
+    d = corr_df
 
-    d=corr_df
+    # font = dict(size=8)
+
     data=[go.Heatmap(z=d,
-                    x = list(charts_df.columns),
-                   y = list(charts_df.columns),
-                   hoverongaps = False)
+                    x = list(h_df.columns),
+                   y = list(h_df.columns),
+                   hoverongaps = True)
         ]
     return data
 

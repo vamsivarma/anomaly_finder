@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel="title icon" href="/static/images/icon-ad-graph.jpeg"><script src="/static/dist/index_lib.min.js"></script><script>$(function() {
+
+          // Adding the Nav bar
+          $("#main-nav-holder").load("/nav"); 
+
+          // Adding the dashboard section content
+          //$("#dashboard-area").load("/dashboard"); 
+
+          // Adding the datasets section content
+          $("#datasets-area").load("/datasets"); 
+
+          // Adding the explore section content
+          $("#explore-area").load("/explore");
+
+          // Adding the experiments section content
+          $("#experiments-area").load("/experiments");
+          
+          // Adding the analytics section content
+          $("#analytics-area").load("/analytics"); 
+
+          // Adding the predict section content
+          $("#predict-area").load("/predict");
+
+          // Adding the settings section content
+          $("#settings-area").load("/settings"); 
+
+          // Adding the upload modal
+          $("#ds-upload-modal").load("/upload"); 
+        });</script><link rel="stylesheet" href="/static/dist/index_lib.min.css">{% if developFlag %}<link rel="stylesheet" href="/static/css/style.css?1302"><link rel="stylesheet" href="/static/css/chart.css?1302"><link rel="stylesheet" href="/static/css/table.css?1302"><link rel="stylesheet" href="/static/css/datasets.css?1302"><link rel="stylesheet" href="/static/css/explore.css?1302"><link rel="stylesheet" href="/static/css/experiments.css?1302"><link rel="stylesheet" href="/static/css/predict.css?1302"><link rel="stylesheet" href="/static/css/analytics.css?1302"><link rel="stylesheet" href="/static/css/settings.css?1302">{% else %}<link rel="stylesheet" href="/static/dist/index.min.css">{% endif %}<title>ANOMA</title></head><body><div class="main-holder-elem" id="main-holder-elem"><nav class="navbar navbar-expand-md navbar-light" id="main-nav-holder"></nav><div class="modal fade" id="ds-upload-modal"></div><div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="context-menu"><a class="dropdown-item" href="#">Data Exploration</a> <a class="dropdown-item" href="#">Data Manipulation</a> <a class="dropdown-item" href="#">Machine Learning</a> <a class="dropdown-item" href="#">Deep Learning</a></div><div class="modal fade" id="sign-out"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h4 class="modal-title">Are you sure you want to leave?</h4><button type="button" class="close" data-dismiss="modal">&times;</button></div><div class="modal-body">Press logout to leave</div><div class="modal-footer"><button type="button" class="btn btn-success" data-dismiss="modal">Stay Here</button> <button type="button" class="btn btn-danger" onclick="navModule.goHome()">Logout</button></div></div></div></div><div class="tab-content"><div role="tabpanel" class="tab-pane fade show active" id="datasets-area"></div><div role="tabpanel" class="tab-pane fade" id="explore-area"></div><div role="tabpanel" class="tab-pane fade" id="analytics-area"></div><div role="tabpanel" class="tab-pane fade" id="experiments-area"></div><div role="tabpanel" class="tab-pane fade" id="predict-area"></div><div role="tabpanel" class="tab-pane fade" id="settings-area"></div></div></div>{% if developFlag %}<script src="/static/js/nav.js?1302"></script><script src="/static/js/api.js?1302"></script>--><script src="/static/js/common.js?1302"></script><script src="/static/js/utils.js?1302"></script><script src="/static/js/table.js?1302"></script><script src="/static/js/chart.js?1302"></script><script src="/static/js/datasets.js?1302"></script><script src="/static/js/explore.js?1302"></script><script src="/static/js/analytics.js?1302"></script><script src="/static/js/experiments.js?1302"></script><script src="/static/js/predict.js?1302"></script><script src="/static/js/settings.js?1302"></script>{% else %}<script src="/static/dist/index.min.js"></script>{% endif %}<div id="pageSpinnerHolder" class="pageSpinnerHolder"><div class="pageSpinner"><img src="/static/images/loader_chart.gif" class="pageSpinnerImage"><div class="pageSpinnerText">Loading...</div></div></div></body></html>

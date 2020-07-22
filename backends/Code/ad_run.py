@@ -17,11 +17,9 @@ gpu_desc = ""
 OS = platform.system()                                                               
 ad_mode = None
 
-mdb = True
-
-# Read the Configuration from MongoDB by default
 set_parameters = SetParameters(None, None, OS) 
 params = set_parameters.read_config_mongodb()
+mdb = True
 
 if params.gpu==True:
     # GPUs
@@ -37,6 +35,11 @@ class AD_Run:
     def start(self, trainFlag):
         results = ''
         metric_df = ''
+
+        # Read the Configuration from MongoDB every time
+        # to read the latest settings
+        set_parameters = SetParameters(None, None, OS) 
+        params = set_parameters.read_config_mongodb()
 
         # Select the action based on the chosen land cover mode 
         if trainFlag:                                   
@@ -55,10 +58,9 @@ class AD_Run:
         
         return [results, metric_df]
 
-
 '''
 # This is for unit testing
 ad_run_obj = AD_Run()
-#ad_run_obj.start(True) # For training
-ad_run_obj.start(False) # For prediction
+ad_run_obj.start(True) # For training
+#ad_run_obj.start(False) # For prediction
 '''

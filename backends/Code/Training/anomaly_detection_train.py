@@ -19,6 +19,7 @@ from Settings.settings import SetParameters
 from Models.lenet5 import Lenet5
 from Models.simple_mlp import SimpleMlp
 from Models.complex_mlp import ComplexMlp
+#from View.view import View
 
 # Other imports
 import numpy as np
@@ -165,6 +166,8 @@ class AnomalyDetectionTraining(object):
         print('Train set number of batches: ', n_train_batches)
         print('Test set number of batches: ', n_test_batches)
         print('\n')
+
+        # pdb.set_trace()
         
         #solver = SGD(lr = self.__params.learning_rate, decay=1e-6, momentum=0.9, nesterov=True)
 
@@ -212,6 +215,11 @@ class AnomalyDetectionTraining(object):
 
         print ('\nTraining the neural network...\n')
         print(self.__params.valid_set_perc)
+
+        print ('\n Number of Epochs \n')
+        print(self.__params.epochs_number)
+
+        #pdb.set_trace()
         
         history = deepnetwork.fit(train_x, train_y, validation_split=self.__params.valid_set_perc, epochs = self.__params.epochs_number, batch_size = self.__params.train_batch_size, shuffle=True, callbacks = default_callbacks)
 
@@ -230,6 +238,9 @@ class AnomalyDetectionTraining(object):
             json_file.write(model_json)
             
         print("Saved model to disk")
+
+        #View.plot_loss(history)
+        #View.plot_acc(history)
 
         '''
         # Need to move this test python file

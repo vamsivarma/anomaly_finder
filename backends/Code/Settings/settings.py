@@ -8,10 +8,10 @@ Modified on 10/02/2020
 import configparser
 from Misc.mongo_wrapper import MongoWrapper as mdb 
 
+import pdb
+
 config = {}
 
-# True for local MongoDB
-# False for remote Atlas MongoDB
 mongoFlag = False
 
 class SetParameters:
@@ -99,7 +99,7 @@ class SetParameters:
             # True for Local Mongo DB
             # False for remote instance
             db = mdb(self, mongoFlag) 
-            config = db.get_config('configuration', self, mongoFlag)     # We read all the configuration of the backend from MongoDB       
+            config = db.get_config('ad_settings', self, mongoFlag)     # We read all the configuration of the backend from MongoDB       
         
     def read_config_file(self):
         
@@ -232,6 +232,6 @@ class SetParameters:
        
         # Testing
         self.model_testing_file = config['model_testing_file']
-        self.test_batch_size = config['test_batch_size']       
+        self.test_batch_size = config['test_batch_size']  
             
         return self
